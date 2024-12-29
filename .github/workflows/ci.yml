@@ -105,7 +105,7 @@ jobs:
 
             # Test MySQL connection using node
             echo "Testing MySQL connection..."
-            sudo docker exec sad_shaw sh -c 'node -e "const mysql=require(\'mysql2\');const conn=mysql.createConnection({host:process.env.MYSQL_HOST,port:process.env.MYSQL_PORT,user:process.env.MYSQL_USER,password:process.env.MYSQL_PASSWORD,database:process.env.MYSQL_DATABASE});conn.connect((err)=>{if(err){console.error(err);process.exit(1)}else{console.log(\'MySQL connection successful\');process.exit(0)}})"' || {
+            sudo docker exec sad_shaw sh -c "node -e \"const mysql=require('mysql2');const conn=mysql.createConnection({host:process.env.MYSQL_HOST,port:process.env.MYSQL_PORT,user:process.env.MYSQL_USER,password:process.env.MYSQL_PASSWORD,database:process.env.MYSQL_DATABASE});conn.connect((err)=>{if(err){console.error(err);process.exit(1)}else{console.log('MySQL connection successful');process.exit(0)}})\""
               echo "MySQL connection failed!"
               exit 1
             }
