@@ -1,29 +1,32 @@
 const waitPort = require('wait-port');
 const fs = require('fs');
 const mysql = require('mysql2');
+const dotenv = require('dotenv');
+
+// Load environment variables from the .env file
+dotenv.config();
 
 const {
     MYSQL_HOST: HOST,
-    MYSQL_HOST_FILE: HOST_FILE,
+    MYSQL_PORT: PORT = 3306, // Default to 3306 if not provided
     MYSQL_USER: USER,
-    MYSQL_USER_FILE: USER_FILE,
     MYSQL_PASSWORD: PASSWORD,
-    MYSQL_PASSWORD_FILE: PASSWORD_FILE,
     MYSQL_DB: DB,
-    MYSQL_DB_FILE: DB_FILE,
 } = process.env;
 
 let pool;
 
 async function init() {
-    const host = HOST_FILE ? fs.readFileSync(HOST_FILE) : HOST;
-    const user = USER_FILE ? fs.readFileSync(USER_FILE) : USER;
-    const password = PASSWORD_FILE ? fs.readFileSync(PASSWORD_FILE) : PASSWORD;
-    const database = DB_FILE ? fs.readFileSync(DB_FILE) : DB;
+    // Use the environment variables directly
+    const host = HOST;
+    const port = PORT;
+    const user = USER;
+    const password = PASSWORD;
+    const database = DB;
 
-    await waitPort({ 
-        host, 
-        port: 3306,
+    await waitPort({
+        host,
+        port,
         timeout: 10000,
         waitForDns: true,
     });
@@ -43,7 +46,7 @@ async function init() {
             err => {
                 if (err) return rej(err);
 
-                console.log(`Connected to mysql db at host ${HOST}`);
+                console.log(`Connected to MySQL database at host ${host}`);
                 acc();
             },
         );
