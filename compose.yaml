@@ -19,10 +19,12 @@ services:
     volumes:
       - todo-mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DB}
+       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+       MYSQL_DATABASE: ${MYSQL_DATABASE}
+       MYSQL_USER: ${MYSQL_USER}
+       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      -"3306:3306"
+      - "3306:3306"
 
 volumes:
   todo-mysql-data:
